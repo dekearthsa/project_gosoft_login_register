@@ -18,7 +18,7 @@ func ControllerRegister(c *gin.Context) {
 
 	var req model.Register
 	if err := c.BindJSON(&req); err != nil {
-		log.Fatal("err BindJSON => ", err)
+		log.Println("err BindJSON => ", err)
 		c.JSON(http.StatusBadRequest, gin.H{"status": "Bad request"})
 	}
 
