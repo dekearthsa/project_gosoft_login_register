@@ -49,13 +49,25 @@ func ControllerRegister(c *gin.Context) {
 		log.Fatal(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "can't find projectID."})
 	}
+	defer client.Close()
 
-	key := datastore.IncompleteKey(KIND, nil)
-	if _, err := client.Put(ctx, key, &payload); err != nil {
-		log.Fatal(err)
-		c.JSON(http.StatusInternalServerError, gin.H{"message": "can't insert data."})
+	var data []model.Register
+	q := datastore.NewQuery(KIND).Filter("Username =", req.Username)
+	if _, err := client.GetAll(ctx, q, &data); err != nil {
+		log.Println(err)
 	}
 
-	c.JSON(http.StatusOK, gin.H{"status": "Create profile success."})
+	if len(data) == 0 {
+		key := datastore.IncompleteKey(KIND, nil)
+		if _, err := client.Put(ctx, key, &payload); err != nil {
+			log.Fatal(err)
+			c.JSON(http.StatusInternalServerError, gin.H{"message": "can't insert data."})
+		}
+		c.JSON(http.StatusOK, gin.H{"status": "Create profile success."})
+	} else {
+		c.JSON(http.StatusOK, gin.H{"status": "This username is already register."})
+	}
+
+	// c.JSON(http.StatusOK, gin.H{"status": "Create profile success."})
 
 }
