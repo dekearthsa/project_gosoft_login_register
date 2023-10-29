@@ -42,6 +42,8 @@ func ControllerRegister(c *gin.Context) {
 		TargetCal: req.TargetCal,
 	}
 
+	// log.Println(payload)
+
 	client, err := datastore.NewClient(ctx, PROJECTID)
 	if err != nil {
 		log.Fatal(err)
@@ -53,5 +55,7 @@ func ControllerRegister(c *gin.Context) {
 		log.Fatal(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"message": "can't insert data."})
 	}
+
+	c.JSON(http.StatusOK, gin.H{"status": "Create profile success."})
 
 }
