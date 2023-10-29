@@ -1,4 +1,4 @@
-module project_gosoft_login
+module project_gosoft_login_register
 
 go 1.20
 
