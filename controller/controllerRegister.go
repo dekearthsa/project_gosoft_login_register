@@ -13,8 +13,8 @@ import (
 
 func ControllerRegister(c *gin.Context) {
 
-	const PROJECTID = "scg-iat-project-coretech"
-	const KIND = "go_product"
+	const PROJECTID = "nindocnx"
+	const KIND = "UserProfile"
 
 	var req model.Register
 	if err := c.BindJSON(&req); err != nil {
