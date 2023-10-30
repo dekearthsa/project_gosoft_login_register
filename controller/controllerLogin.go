@@ -47,7 +47,17 @@ func ControllerLogin(c *gin.Context) {
 		}
 
 		token, err := haddler.HaddlerGenerateToken(req.Username)
-		c.JSON(http.StatusOK, gin.H{"token": token})
+		c.JSON(http.StatusOK, gin.H{
+			"token":     token,
+			"age":       data[0].Age,
+			"excercise": data[0].Excercise,
+			"height":    data[0].Height,
+			"Weight":    data[0].Weight,
+			"meal":      data[0].Meal,
+			"sex":       data[0].Sex,
+			"target":    data[0].Target,
+			"targetCal": data[0].TargetCal,
+		})
 	}
 
 }
