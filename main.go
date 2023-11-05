@@ -14,13 +14,14 @@ func main() {
 	router := gin.New()
 	router.Use(cors.New(cors.Config{
 		AllowOrigins: []string{"*"},
-		AllowMethods: []string{"POST", "PUT", "PATCH", "DELETE"},
-		AllowHeaders: []string{"Content-Type,access-control-allow-origin,access-control-allow-headers"},
+		AllowMethods: []string{"POST", "PUT", "PATCH", "DELETE", "GET"},
+		AllowHeaders: []string{"Content-Type,access-control-allow-origin,access-control-allow-headers,Authorization"},
 	}))
 
 	router.GET("/api/debug", controller.ControllerDebug)
 	router.POST("/api/register", controller.ControllerRegister)
 	router.POST("/api/login", controller.ControllerLogin)
+	router.GET("/api/check/auth", controller.ControllerCheckToken)
 
 	err := router.Run(PORT)
 	if err != nil {

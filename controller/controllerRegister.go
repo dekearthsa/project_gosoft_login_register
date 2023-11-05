@@ -63,9 +63,9 @@ func ControllerRegister(c *gin.Context) {
 			log.Fatal(err)
 			c.JSON(http.StatusInternalServerError, gin.H{"message": "can't insert data."})
 		}
-		c.JSON(http.StatusOK, gin.H{"status": "Create profile success."})
+		c.JSON(http.StatusOK, gin.H{"status": "ok", "desc": "Create profile success."})
 	} else {
-		c.JSON(http.StatusOK, gin.H{"status": "This username is already register."})
+		c.JSON(http.StatusOK, gin.H{"status": "ok", "desc": "This username is already register."})
 	}
 
 	// c.JSON(http.StatusOK, gin.H{"status": "Create profile success."})
