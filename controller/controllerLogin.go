@@ -48,6 +48,7 @@ func ControllerLogin(c *gin.Context) {
 
 		token, err := haddler.HaddlerGenerateToken(req.Username)
 		c.JSON(http.StatusOK, gin.H{
+			"Username":  req.Username,
 			"token":     token,
 			"age":       data[0].Age,
 			"excercise": data[0].Excercise,

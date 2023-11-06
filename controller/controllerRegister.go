@@ -58,7 +58,7 @@ func ControllerRegister(c *gin.Context) {
 	}
 
 	if len(data) == 0 {
-		key := datastore.IncompleteKey(KIND, nil)
+		key := datastore.NameKey(KIND, req.Username, nil)
 		if _, err := client.Put(ctx, key, &payload); err != nil {
 			log.Fatal(err)
 			c.JSON(http.StatusInternalServerError, gin.H{"message": "can't insert data."})

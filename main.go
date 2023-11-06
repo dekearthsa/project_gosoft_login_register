@@ -22,6 +22,8 @@ func main() {
 	router.POST("/api/register", controller.ControllerRegister)
 	router.POST("/api/login", controller.ControllerLogin)
 	router.GET("/api/check/auth", controller.ControllerCheckToken)
+	router.POST("/api/update/password", controller.ControllerUpdatePassword)
+	router.POST("/api/update/profile", controller.ControllerUpdateProfile)
 
 	err := router.Run(PORT)
 	if err != nil {
