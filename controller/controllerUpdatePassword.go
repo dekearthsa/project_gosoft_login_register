@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"net/http"
+	"project_gosoft_login_register/model"
 
 	"cloud.google.com/go/datastore"
 	"github.com/gin-gonic/gin"
@@ -15,19 +16,6 @@ type UserPasword struct {
 	Password string
 }
 
-type Register struct {
-	Username  string
-	Password  string
-	Sex       string
-	Age       int
-	Height    float64
-	Weight    float64
-	Excercise string
-	Target    string
-	Meal      int
-	TargetCal int
-}
-
 func ControllerUpdatePassword(c *gin.Context) {
 	const PROJECTID = "nindocnx"
 	const KIND = "UserProfile"
@@ -37,7 +25,7 @@ func ControllerUpdatePassword(c *gin.Context) {
 		log.Println("err BindJSON => ", err)
 		c.JSON(http.StatusBadRequest, gin.H{"status": "Bad request"})
 	}
-	log.Println("req => ", req)
+	// log.Println("req => ", req)
 
 	ctx := context.Background()
 	hashPassword, err := bcrypt.GenerateFromPassword([]byte(req.Password), bcrypt.DefaultCost)
@@ -47,7 +35,7 @@ func ControllerUpdatePassword(c *gin.Context) {
 
 	client, err := datastore.NewClient(ctx, PROJECTID)
 
-	var data []Register
+	var data []model.Register
 
 	query := datastore.NewQuery(KIND).Filter("Username =", req.Username).Limit(1)
 	if _, err := client.GetAll(ctx, query, &data); err != nil {
@@ -57,7 +45,7 @@ func ControllerUpdatePassword(c *gin.Context) {
 	data[0].Password = string(hashPassword)
 	log.Println(data)
 
-	payload := Register{
+	payload := model.Register{
 		Username:  data[0].Username,
 		Password:  string(hashPassword),
 		Age:       data[0].Age,
